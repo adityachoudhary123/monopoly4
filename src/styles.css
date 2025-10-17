@@ -1,0 +1,393 @@
+:root{
+  /* Light theme */
+  --bg: #f7f9fc;            /* page background (light) */
+  --card: #ffffff;          /* surfaces/cards */
+  --text: #0d1321;          /* main text (dark) */
+  --muted: #475569;         /* secondary text */
+  --accent: #1649ff;        /* brand accent */
+  --accent-2: #567dff;
+  --accent-ink: #0b2a6b;    /* accent for marquee text */
+  --ring: rgba(22,73,255,0.35);
+
+  /* Keep/adjust your navbar gradient as needed */
+  --navbar-gradient: linear-gradient(90deg, #2e51ff 0%, #5a7cff 40%, #8bb3ff 100%);
+}
+
+*{ box-sizing: border-box; }
+html, body, #root{ height: 100%; }
+body{
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+}
+
+a{ color: inherit; text-decoration: none; }
+
+/* ---------------- Layout ---------------- */
+.page{ padding: 24px 16px; }
+.container{
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* ---------------- Navbar ---------------- */
+.navbar{
+  position: sticky; top: 0; z-index: 50;
+  background: var(--navbar-gradient);
+  box-shadow: 0 8px 24px rgba(0,0,0,.25);
+}
+.navbar__inner{
+  height: 64px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+
+.navbar__brand{
+  border: none; background: transparent; color: #fff;
+  font-weight: 900; font-size: 20px; letter-spacing: .06em;
+  text-shadow: 0 1px 0 rgba(0,0,0,.25);
+  cursor: pointer; user-select: none; padding: 8px 10px; border-radius: 10px;
+}
+
+.navbar__links{
+  display: flex; gap: 14px; align-items: center; font-weight: 600; color: #fff;
+}
+
+.link, .dropdown__button{
+  color: #fff;
+  font-size: 15px; line-height: 1;
+  padding: 8px 10px; border-radius: 10px; border: 1px solid transparent;
+}
+.link:hover, .dropdown__button:hover,
+.link:focus-visible, .dropdown__button:focus-visible{
+  background: rgba(255,255,255,.12);
+  border-color: rgba(255,255,255,.18);
+  outline: none;
+}
+.active{
+  background: rgba(255,255,255,.18);
+  border-color: rgba(255,255,255,.28);
+}
+
+/* ---------------- Dropdown ---------------- */
+.dropdown{ position: relative; }
+.dropdown__button{
+  background: transparent;
+  border: 1px solid rgba(255,255,255,.22);
+  color: #fff;
+  cursor: pointer;
+}
+.caret{ margin-left: 6px; opacity: .9; }
+.dropdown__menu{
+  position: absolute; top: 44px; left: 0; min-width: 220px;
+  background: #fff; color: #111; border-radius: 12px;
+  box-shadow: 0 20px 40px rgba(0,0,0,.25);
+  padding: 6px; display: none;
+}
+.dropdown__menu.is-open{ display: block; }
+.dropdown__item{
+  padding: 10px 12px; border-radius: 8px; cursor: default;
+}
+.dropdown__item:hover{ background: #f3f6ff; }
+
+/* ---------------- Hero ---------------- */
+.hero{
+  background: linear-gradient(180deg, rgba(13,19,33,.03), rgba(13,19,33,0));
+  border: 1px solid rgba(13,19,33,.06);
+  box-shadow: 0 10px 28px rgba(20,31,56,.08), inset 0 0 0 1px rgba(13,19,33,.03);
+  border-radius: 18px;
+  padding: 28px;
+  margin: 12px 0 24px 0;
+}
+.hero h1{ margin: 0 0 8px 0; font-size: 28px; }
+.hero p{ margin: 0; color: var(--muted); }
+
+/* ---------------- Marquee ---------------- */
+.marquee{
+  overflow: hidden; white-space: nowrap; border-radius: 12px;
+  background: #0f162d; border: 1px solid rgba(255,255,255,.08);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.03);
+}
+.marquee__track{
+  display: inline-block;
+  padding: 12px 0; font-weight: 800; letter-spacing: .3px;
+  color: var(--accent);
+  animation: marquee 18s linear infinite;
+  will-change: transform;
+}
+.marquee__chunk{ padding-right: 28px; }
+
+@keyframes marquee{
+  0%{ transform: translateX(0%); }
+  100%{ transform: translateX(-100%); }
+}
+
+/* ---------------- Utilities ---------------- */
+.card{
+  background: var(--card);
+  border: 1px solid rgba(13,19,33,.08);
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 10px 28px rgba(20,31,56,.08);
+}
+
+:focus-visible{
+  outline: 3px solid var(--ring);
+  outline-offset: 2px;
+}
+
+/* ---------------- Responsive ---------------- */
+@media (max-width: 920px){
+  .navbar__inner{ height: 60px; }
+  .navbar__brand{ font-size: 18px; }
+  .navbar__links{ gap: 10px; }
+}
+@media (max-width: 640px){
+  .navbar__links{ gap: 6px; }
+  .link, .dropdown__button{ padding: 6px 8px; font-size: 14px; }
+}
+/* One-by-one marquee: each message slides in from the right, pauses, slides out to the left */
+.marquee.marquee--single{
+  position: relative;
+  height: 56px;                         /* fixed height prevents layout shift */
+  background: #ffffff;
+  border: 1px solid #e6eaf5;
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+
+.marquee__slide{
+  font-weight: 800;
+  letter-spacing: .3px;
+  color: var(--accent-ink);
+  padding: 8px 16px;
+  /* 0.6s in, 1.0s hold, 0.6s out = 2.2s (match JS interval) */
+  animation:
+    slideInX 600ms ease both,
+    stayX 1000ms linear 600ms both,
+    slideOutX 600ms ease 1600ms both;
+  will-change: transform, opacity;
+}
+
+@keyframes slideInX {
+  from { transform: translateX(120%); opacity: 0; }
+  to   { transform: translateX(0%);   opacity: 1; }
+}
+@keyframes stayX {
+  from { opacity: 1; } to { opacity: 1; }
+}
+@keyframes slideOutX {
+  from { transform: translateX(0%);    opacity: 1; }
+  to   { transform: translateX(-120%); opacity: 0; }
+}
+
+/* responsive */
+@media (max-width: 920px){
+  .slide{ grid-template-columns: 1fr; text-align: center; }
+  .slide__media{ margin: 0 auto; }
+}
+
+/* ---------- Slider (bigger, colorful, manual controls) ---------- */
+.slider{ margin-top: 24px; }
+
+.slider__viewport{
+  position: relative;
+  overflow: hidden;
+  background: #ffffff;
+  border: 1px solid #e6eaf5;
+  border-radius: 20px;
+  box-shadow: 0 12px 30px rgba(20,31,56,.10);
+  outline: none; /* focus handled below */
+}
+
+.slider__viewport:focus-visible{
+  box-shadow: 0 0 0 4px var(--ring), 0 12px 30px rgba(20,31,56,.10);
+}
+
+.slider__track{
+  display: flex;
+  width: 100%;
+  transition: transform 500ms ease;
+}
+
+.slide{
+  min-width: 100%;
+  display: grid;
+  grid-template-columns: 420px 1fr;  /* big artwork panel */
+  gap: 20px;
+  align-items: center;
+  padding: 28px 28px;
+}
+
+.slide__media{
+  display: grid; place-items: center;
+  max-width: 420px;
+}
+
+.slide__text{ min-width: 0; }
+.slide__title{
+  margin: 0 0 10px 0;
+  font-size: 26px;
+  font-weight: 900;
+  color: var(--accent-ink);
+}
+.slide__caption{
+  margin: 0;
+  color: var(--muted);
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+/* controls */
+.slider__btn{
+  position: absolute; top: 50%;
+  transform: translateY(-50%);
+  width: 42px; height: 42px;
+  border-radius: 50%;
+  border: 1px solid #d9e0f2;
+  background: #fff;
+  color: var(--accent-ink);
+  display: grid; place-items: center;
+  cursor: pointer;
+  box-shadow: 0 8px 18px rgba(20,31,56,.15);
+}
+.slider__btn:hover{ background: #f4f7ff; }
+.slider__btn:focus-visible{ outline: 3px solid var(--ring); }
+.slider__btn.prev{ left: 12px; }
+.slider__btn.next{ right: 12px; }
+
+/* dots */
+.slider__dots{
+  display: flex; gap: 8px; justify-content: center; padding: 12px 0 14px;
+}
+.dot{
+  width: 10px; height: 10px; border-radius: 999px; border: none;
+  background: #c8d2ef; cursor: pointer;
+}
+.dot.is-active{ background: var(--accent); width: 22px; }
+
+/* responsive */
+@media (max-width: 920px){
+  .slide{ grid-template-columns: 1fr; text-align: center; }
+  .slide__media{ margin: 0 auto; }
+}
+
+
+/* --- Scores image --- */
+/* make image ~20% smaller and centered */
+.score-photo{
+  width: 80%;                /* 20% smaller than full container */
+  margin: 12px auto 0;       /* center it */
+  background: #fff;
+  border: 1px solid #e6eaf5;
+  border-radius: 16px;
+  box-shadow: 0 10px 28px rgba(20,31,56,.08);
+  overflow: hidden;
+}
+.score-photo img{ display:block; width:100%; height:auto; }
+
+/* --- Scores marquee (good-looking pill highlights) --- */
+.score-ticker{ margin: 0 auto 12px; }
+
+.score-ticker__item{
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: #f7f9ff;
+  border: 1px solid #dfe6fb;
+  color: var(--accent-ink);
+  font-weight: 800;
+  letter-spacing: .2px;
+  box-shadow: 0 6px 14px rgba(20,31,56,.06);
+}
+
+@media (prefers-reduced-motion: reduce){
+  .score-ticker__track{ animation: none; }
+}
+
+
+/* --- Scores marquee container (unchanged) --- */
+.score-ticker{
+  margin: 0 auto 12px;
+  background: #fff;
+  border: 1px solid #e6eaf5;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 10px 24px rgba(20,31,56,.08);
+}
+.score-ticker__track{
+  display: inline-flex;
+  gap: 14px;
+  padding: 12px 14px;
+  white-space: nowrap;
+  animation: score-move 28s linear infinite;
+}
+@keyframes score-move{
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* --- Colored pills with contrasting text --- */
+.pill{
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-weight: 800;
+  letter-spacing: .2px;
+  box-shadow: 0 6px 14px rgba(20,31,56,.06);
+  border: 1px solid transparent;
+}
+
+/* AI Pioneers – orange */
+.pill--orange{
+  background: #FDBA74;          /* light orange */
+  border-color: #FB923C;
+  color: #111827;                /* dark text for contrast */
+}
+
+/* PromptDNA – light blue */
+.pill--blue{
+  background: #E0F2FE;          /* light sky */
+  border-color: #93C5FD;
+  color: #0C4A6E;                /* deep teal-blue text */
+}
+
+/* Trail Blazers – light green */
+.pill--green{
+  background: #DCFCE7;          /* light green */
+  border-color: #86EFAC;
+  color: #065F46;                /* deep green text */
+}
+
+/* Visionary Vectors – yellow */
+.pill--yellow{
+  background: #FEF9C3;          /* light yellow */
+  border-color: #FDE68A;
+  color: #713F12;                /* dark amber text */
+}
+
+/* AINerds – light purple */
+.pill--purple{
+  background: #F3E8FF;          /* light purple */
+  border-color: #D8B4FE;
+  color: #4C1D95;                /* deep violet text */
+}
+
+/* Motion preference */
+@media (prefers-reduced-motion: reduce){
+  .score-ticker__track{ animation: none; }
+}
+
+
+
+
+
+
+
+
