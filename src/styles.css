@@ -384,7 +384,113 @@ a{ color: inherit; text-decoration: none; }
   .score-ticker__track{ animation: none; }
 }
 
+/* ---------- Generic grid cards ---------- */
+.grid{
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+.grid-card{
+  background: var(--card);
+  border: 1px solid rgba(13,19,33,.08);
+  border-radius: 14px;
+  padding: 14px;
+  box-shadow: 0 8px 20px rgba(20,31,56,.07);
+  text-align: left;
+}
+.grid-card h4{
+  margin: 0 0 6px 0;
+  font-size: 18px;
+  color: var(--accent-ink);
+}
+.grid-card .meta{
+  margin: 6px 0 0;
+  color: var(--muted);
+  font-size: 18px;
+  font-family:sans-serif;
+}
+.grid-card .pill-mini{
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: #f3f6ff;
+  border: 1px solid #dfe6fb;
+  font-weight: 700; font-size: 12px; color: var(--accent-ink);
+}
 
+@media (max-width: 1100px){ .grid{ grid-template-columns: repeat(3,1fr); } }
+@media (max-width: 800px){  .grid{ grid-template-columns: repeat(2,1fr); } }
+@media (max-width: 520px){  .grid{ grid-template-columns: 1fr; } }
+
+/* ---- Big hero/section images ---- */
+.hero-card {
+  margin-bottom: 18px;
+  overflow: hidden;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,.08);
+}
+
+.hero-img {
+  width: 100%;
+  height: clamp(480px, 72vh, 900px);  /* big, responsive */
+  object-fit: cover;
+  display: block;
+}
+
+/* Force About carousel slides to be full-width image (no text/media split) */
+.about-carousel .slide{
+  display:block !important;                /* break the 2-column grid */
+  grid-template-columns: none !important;
+  padding: 0 !important;
+}
+.about-carousel .slide__text{              /* hide any text column if present */
+  display:none !important;
+}
+.about-carousel .slide__media{
+  width: 100% !important;
+  max-width: 100% !important;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+/* Big hero sizing for about images */
+.about-carousel .slide__media img{
+  width: 100%;
+  height: clamp(520px, 74vh, 1000px);
+  object-fit: cover;                       /* shows “most of page”, may crop sides */
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,.08);
+}
+
+/* OPTIONAL: if you want the entire image visible (no side-crop), swap to 'contain' */
+.about-carousel.contain .slide__media img{
+  object-fit: contain;                     /* shows the whole image with letterboxing */
+  background: #0b1220;                     /* matches your theme; adjust if needed */
+}
+
+.agents-carousel .slide{
+  display:block !important;               /* break the 2-col grid */
+  grid-template-columns:none !important;
+  padding:0 !important;
+}
+.agents-carousel .slide__text{            /* if any, hide it */
+  display:none !important;
+}
+.agents-carousel .slide__media{
+  width:100% !important;
+  max-width:100% !important;
+  margin:0 !important;
+  grid-column:1 / -1 !important;          /* span full width */
+}
+
+/* Ensure the inner cards grid actually stretches */
+.agents-carousel .slide__media .grid{
+  width:100%;
+  margin:0;
+  grid-template-columns:repeat(3,minmax(0,1fr)); /* adjust count if you want */
+  gap:18px;
+}
 
 
 

@@ -1,11 +1,11 @@
 import race from "../assets/scores-race.jpg";
 
 const SCORES = [
-  { team: "AI Pioneers", points: 275 },
+  { team: "AI Pioneers", points: 725 },
   { team: "PromptDNA", points: 675 },
   { team: "Trail Blazers", points: 655 },
-  { team: "Visionary Vectors", points: 1035 },
-  { team: "AINerds", points: 770 },
+  { team: "Visionary Vectors", points: 1660 },
+  { team: "AINerds", points: 1080 },
 ];
 
 const ordered = [...SCORES].sort((a, b) => b.points - a.points);
