@@ -3,13 +3,14 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "scripts": {
-    "dev": "vite",
+ "scripts": {
     "build": "vite build",
-    "lint": "eslint .",
-    "preview": "vite preview"
+    "start": "node server.cjs",
+    "postinstall": "npm run build"
   },
   "dependencies": {
+    "express": "^5.1.0",
+    "helmet": "^8.1.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-router-dom": "^7.9.1"
