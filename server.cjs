@@ -1,5 +1,5 @@
 // server.js - production server for Linux App Service
-
+console.log("#### Monopoly app Node version:", process.version);
 const express = require("express");
 const path = require("path");
 const helmet = require("helmet");
@@ -27,6 +27,10 @@ const CSP =
 
 const ALLOWED_HOST = "monopoly-freneg6ghmfjf3hw.centralindia-01.azurewebsites.net";
 
+// Lock down browser features you don't use
+const PERMISSIONS_POLICY =
+  "geolocation=(), microphone=(), camera=(), payment=(), fullscreen=(), usb=()";
+
 app.use((req, res, next) => {
   // Host header injection protection
   const host = req.headers.host;
@@ -39,8 +43,24 @@ app.use((req, res, next) => {
   res.setHeader("Content-Security-Policy", CSP);
   res.setHeader("Referrer-Policy", "strict-origin-when-cross-origin");
   res.setHeader("X-Content-Type-Options", "nosniff");
-  res.setHeader("Strict-Transport-Security", "max-age=31536000; includeSubDomains");
+  res.setHeader(
+    "Strict-Transport-Security",
+    "max-age=31536000; includeSubDomains"
+  );
   res.setHeader("X-Frame-Options", "DENY");
+
+  // >>> Added headers <<<
+  // XSS filter (legacy, but some scanners still expect it)
+  res.setHeader("X-XSS-Protection", "1; mode=block");
+
+  // Permissions Policy (ex-Feature-Policy)
+  res.setHeader("Permissions-Policy", PERMISSIONS_POLICY);
+
+  // Cache control – disable caching for responses
+  res.setHeader(
+    "Cache-Control",
+    "no-store, no-cache, must-revalidate, max-age=0"
+  );
 
   // CORS: do NOT set Access-Control-Allow-Origin here (same-origin SPA),
   // so AppScan will not see overly-permissive CORS.
